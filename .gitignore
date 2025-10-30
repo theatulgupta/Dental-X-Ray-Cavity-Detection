@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb_checkpoints
+
+# Virtual environment
+.env/
+.venv/
+venv/
+ENV/
+
+# Model weights & logs
+*.pt
+models/
+results/training_logs/
+results/metrics/*.json
+
+# Datasets
+data/raw/
+data/processed/
+data/annotations/
+
+# VSCode / PyCharm / MacOS
+.vscode/
+.idea/
+.DS_Store
+
+# Hugging Face cache
+~/.cache/huggingface/

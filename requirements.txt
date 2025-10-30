@@ -1,0 +1,11 @@
+ultralytics
+torch
+torchvision
+gradio
+opencv-python
+pandas
+numpy
+matplotlib
+seaborn
+tqdm
+scikit-learn
