@@ -124,7 +124,7 @@ pip install -r requirements.txt
 
 ### 4️⃣ Download dataset
 
-Download the dataset from [Kaggle Dental X-ray Dataset](https://www.kaggle.com) and place it inside:
+Download the dataset from [Kaggle Dental X-ray Dataset](https://www.kaggle.com/datasets/killa92/dental-x-ray-images-dataset?resource=download) and place it inside:
 
 ```text
 data/raw/
