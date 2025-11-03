@@ -133,8 +133,8 @@ data/raw/
 ### 5️⃣ Run preprocessing
 
 ```bash
-python src/data_prep/split_dataset.py
 python src/data_prep/convert_to_yolo_format.py
+python src/data_prep/split_dataset.py
 ```
 
 ### 6️⃣ Train models
