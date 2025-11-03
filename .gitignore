@@ -4,12 +4,29 @@ __pycache__/
 *.pyo
 *.pyd
 *.ipynb_checkpoints
+*.py[cod]
+*$py.class
+*.so
+.Python
 
 # Virtual environment
-# .env/
-# .venv/
-# venv/
-# ENV/
+.env
+.venv/
+venv/
+ENV/
+env/
+.python-version.bak
+
+# Environment variables
+.env.local
+.env.*.local
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+*.cover
+.hypothesis/
 
 # Model weights & logs
 # *.pt

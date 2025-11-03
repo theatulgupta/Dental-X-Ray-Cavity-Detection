@@ -1,0 +1,68 @@
+name: Model Training Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Model to train (yolov8 or yolov12)"
+        required: true
+        default: "yolov8"
+        type: choice
+        options:
+          - yolov8
+          - yolov12
+      epochs:
+        description: "Number of epochs"
+        required: true
+        default: "100"
+      batch_size:
+        description: "Batch size"
+        required: true
+        default: "16"
+
+jobs:
+  train:
+    name: Train Model
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Download dataset
+        run: |
+          # Add your dataset download logic here
+          echo "Downloading dataset..."
+
+      - name: Train model
+        run: |
+          if [ "${{ inputs.model }}" == "yolov8" ]; then
+            python -m src.training.train_yolov8 --epochs ${{ inputs.epochs }} --batch ${{ inputs.batch_size }}
+          else
+            python -m src.training.train_yolov12 --epochs ${{ inputs.epochs }} --batch ${{ inputs.batch_size }}
+          fi
+
+      - name: Upload trained model
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model-${{ inputs.model }}
+          path: models/*.pt
+          retention-days: 30
+
+      - name: Upload training logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-logs-${{ inputs.model }}
+          path: results/training_logs/
+          retention-days: 30

@@ -9,3 +9,5 @@ matplotlib
 seaborn
 tqdm
 scikit-learn
+pyyaml
+pillow
