@@ -187,9 +187,21 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Author's 
 
 **Atul Kumar Gupta**  
+Engineer | AI & Full Stack Developer  
+🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
+
+**Ankit Pawar**  
+Engineer | AI & Full Stack Developer  
+🔗 [GitHub](https://github.com/ankit8453) • [LinkedIn](https://linkedin.com/in/theatulgupta)
+
+**Gourav Chouhan**  
+Engineer | AI & Full Stack Developer  
+🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
+
+**Richa Verma**  
 Engineer | AI & Full Stack Developer  
 🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
 
