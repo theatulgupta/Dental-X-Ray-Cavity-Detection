@@ -1,121 +1,27 @@
 version: "3.8"
 
 services:
-  # ==========================================
-  # Development Environment
-  # ==========================================
-  dev:
-    build:
-      context: .
-      target: development
-      dockerfile: Dockerfile
-    image: dental-xray-detection:dev
-    container_name: dental-xray-dev
-    volumes:
-      - .:/app
-      - ./data:/app/data
-      - ./models:/app/models
-      - ./results:/app/results
-      - ./notebooks:/app/notebooks
-    ports:
-      - "8888:8888" # Jupyter
-      - "7860:7860" # Gradio
-    environment:
-      - PYTHONPATH=/app
-      - JUPYTER_ENABLE_LAB=yes
-    command: >
-      bash -c "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root"
-    stdin_open: true
-    tty: true
-    networks:
-      - dental-net
-
-  # ==========================================
-  # Training Environment (GPU)
-  # ==========================================
-  train:
-    build:
-      context: .
-      target: training
-      dockerfile: Dockerfile
-    image: dental-xray-detection:train
-    container_name: dental-xray-train
-    runtime: nvidia
-    volumes:
-      - ./data:/app/data
-      - ./models:/app/models
-      - ./results:/app/results
-      - ./config:/app/config
-      - ./src:/app/src
-    environment:
-      - PYTHONPATH=/app
-      - CUDA_VISIBLE_DEVICES=0
-      - NVIDIA_VISIBLE_DEVICES=all
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    networks:
-      - dental-net
-    stdin_open: true
-    tty: true
-
-  # ==========================================
-  # Production App (Gradio Interface)
-  # ==========================================
-  app:
-    build:
-      context: .
-      target: production
-      dockerfile: Dockerfile
-    image: dental-xray-detection:prod
-    container_name: dental-xray-app
+  dental-app:
+    build: .
     ports:
       - "7860:7860"
     volumes:
-      - ./models:/app/models:ro
-      - ./config:/app/config:ro
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./runs:/app/runs
     environment:
-      - PYTHONPATH=/app
       - GRADIO_SERVER_NAME=0.0.0.0
       - GRADIO_SERVER_PORT=7860
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7860/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    networks:
-      - dental-net
+    command: python app.py
 
-  # ==========================================
-  # Testing Environment
-  # ==========================================
-  test:
-    build:
-      context: .
-      target: development
-      dockerfile: Dockerfile
-    image: dental-xray-detection:test
-    container_name: dental-xray-test
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"
     volumes:
-      - .:/app
-    environment:
-      - PYTHONPATH=/app
-    command: >
-      bash -c "pytest tests/ -v --cov=src --cov-report=html --cov-report=term"
-    networks:
-      - dental-net
-
-networks:
-  dental-net:
-    driver: bridge
-
-volumes:
-  data-volume:
-  models-volume:
-  results-volume:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./runs:/app/runs
+      - ./src:/app/src
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''

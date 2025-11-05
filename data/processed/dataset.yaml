@@ -1,0 +1,5 @@
+train: /Users/theatulgupta/Desktop/Deep Learning Project/dental-xray-cavity-detection/data/processed/train/images
+val: /Users/theatulgupta/Desktop/Deep Learning Project/dental-xray-cavity-detection/data/processed/val/images
+test: /Users/theatulgupta/Desktop/Deep Learning Project/dental-xray-cavity-detection/data/processed/test/images
+nc: 4
+names: [cavity_class_0, cavity_class_1, cavity_class_2, cavity_class_3]

@@ -1,48 +1,50 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.ipynb_checkpoints
 *.py[cod]
 *$py.class
 *.so
 .Python
 
-# Virtual environment
-.env
+# Virtual environments
 .venv/
 venv/
-ENV/
 env/
-.python-version.bak
+ENV/
 
-# Environment variables
-.env.local
-.env.*.local
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
 
-# Testing
-.coverage
-.pytest_cache/
-htmlcov/
-*.cover
-.hypothesis/
-
-# Model weights & logs
-# *.pt
-# models/
-# results/training_logs/
-# results/metrics/*.json
-
-# Datasets
-# data/raw/
-# data/processed/
-# data/annotations/
-
-# VSCode / PyCharm / MacOS
+# IDE
 .vscode/
 .idea/
-.DS_Store
+*.swp
+*.swo
+*~
 
-# Hugging Face cache
-~/.cache/huggingface/
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# Project specific
+runs/          # Training outputs (too large for git)
+*.pt           # Model weights (use Git LFS or separate storage)
+*.pth
+*.onnx
+
+# Logs
+*.log
+*.out
+
+# Data (add to Git LFS if needed)
+data/raw/dental/images/*.png
+data/processed/*/images/*.png
+
+# Temporary
+*.tmp
+.cache/

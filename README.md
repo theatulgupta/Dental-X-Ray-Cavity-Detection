@@ -1,364 +1,141 @@
-# 🦷 Dental X-Ray Cavity Detection
+# Dental X-Ray Cavity Detection
 
-A deep learning project to detect dental cavities from X-ray images using **YOLOv8** and **YOLOv12**, with a **Gradio web demo** for deployment on **Hugging Face Spaces**.
-
----
-
-## 📋 Overview
-
-This project compares two object detection models (**YOLOv8** and **YOLOv12**) trained on a public dental X-ray dataset. Users can upload an image via the web interface to detect and visualize cavities.
+Deep learning project to detect cavities in dental X-rays using YOLOv8 and YOLOv12.
 
 ---
 
-## 🧠 Features
+## 🚀 Quick Start
 
-- Train and evaluate YOLOv8 & YOLOv12 models on dental X-rays
-- Dataset preprocessing and YOLO-format conversion
-- Model comparison: parameters, training time, and inference speed
-- Gradio web app for cavity detection
-- Hugging Face Spaces deployment-ready
-
----
-
-## 🗂️ Project Structure
-
-```text
-dental-xray-cavity-detection/
-│
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-│
-├── config/
-│   ├── yolo_v8.yaml
-│   ├── yolo_v12.yaml
-│   └── app_config.yaml
-│
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── annotations/
-│
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_preprocessing.ipynb
-│   ├── 03_yolov8_training.ipynb
-│   ├── 04_yolov12_training.ipynb
-│   ├── 05_inference_comparison.ipynb
-│   └── 06_metrics_visualization.ipynb
-│
-├── src/
-│   ├── data_prep/
-│   │   ├── split_dataset.py
-│   │   ├── convert_to_yolo_format.py
-│   │   └── utils.py
-│   │
-│   ├── training/
-│   │   ├── train_yolov8.py
-│   │   ├── train_yolov12.py
-│   │   └── model_utils.py
-│   │
-│   ├── evaluation/
-│   │   ├── compare_models.py
-│   │   ├── inference_benchmark.py
-│   │   └── metrics_utils.py
-│   │
-│   ├── app/
-│   │   ├── app.py
-│   │   ├── inference.py
-│   │   ├── visualize.py
-│   │   └── helpers.py
-│   │
-│   └── deployment/
-│       ├── hf_spaces_setup.md
-│       └── requirements_spaces.txt
-│
-├── models/
-│   ├── yolov8_best.pt
-│   ├── yolov12_best.pt
-│   └── model_summary.json
-│
-├── results/
-│   ├── training_logs/
-│   ├── metrics/
-│   │   ├── yolov8_results.json
-│   │   └── yolov12_results.json
-│   └── comparison_plot.png
-│
-└── app.py
-```
-
----
-
-## 🧩 Setup Instructions
-
-### 1️⃣ Clone the repository
+### Docker (Recommended)
 
 ```bash
-git clone https://github.com/theatulgupta/Dental-X-Ray-Cavity-Detection.git
-cd Dental-X-Ray-Cavity-Detection
+make app      # Gradio app → http://localhost:7860
+make jupyter  # Notebooks → http://localhost:8888
 ```
 
-### 2️⃣ Create and activate virtual environment
-
-**macOS/Linux:**
+### Manual Setup
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-**Windows:**
-
-```powershell
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 3️⃣ Install dependencies
-
-```bash
+python -m venv .venv
+source .venv/bin/activate  # Mac/Linux | .venv\Scripts\activate on Windows
 pip install -r requirements.txt
-```
-
-### 4️⃣ Download dataset
-
-Download the dataset from [Kaggle Dental X-ray Dataset](https://www.kaggle.com/datasets/killa92/dental-x-ray-images-dataset?resource=download) and place it inside:
-
-```text
-data/raw/
-```
-
-### 5️⃣ Run preprocessing
-
-```bash
-python src/data_prep/convert_to_yolo_format.py
-python src/data_prep/split_dataset.py
-```
-
-### 6️⃣ Train models
-
-```bash
-python src/training/train_yolov8.py
-python src/training/train_yolov12.py
-```
-
-### 7️⃣ Compare performance
-
-```bash
-python src/evaluation/compare_models.py
-```
-
-### 8️⃣ Launch web app
-
-```bash
 python app.py
 ```
 
----
-
-## 🚀 Deployment (Hugging Face Spaces)
-
-Follow the instructions in [`src/deployment/hf_spaces_setup.md`](src/deployment/hf_spaces_setup.md) to deploy the Gradio app to Hugging Face Spaces.
+📖 **Full setup guide:** [TEAM_SETUP.md](TEAM_SETUP.md)
 
 ---
 
-## 📊 Results
+## 📁 Project Structure
 
-| Model   | Parameters | Training Time | Inference Time (avg/img) | mAP |
-| ------- | ---------- | ------------- | ------------------------ | --- |
-| YOLOv8  | —          | —             | —                        | —   |
-| YOLOv12 | —          | —             | —                        | —   |
+```
+notebooks/
+  01_prepare_dataset.ipynb    # Split data into train/val
+  02_train_yolov8.ipynb        # Train YOLOv8 model
+  03_train_yolov12.ipynb       # Train YOLOv12 model
+  04_compare_metrics.ipynb     # Compare model performance
 
-> **Note:** Results will be populated after training and evaluation.
+src/app/
+  app.py          # Gradio web interface
+  inference.py    # Model loading & prediction
 
----
+models/
+  yolov8_best.pt   # YOLOv8 trained weights
+  yolov12_best.pt  # YOLOv12 trained weights
 
-## 📜 License
-
-Licensed under the MIT License — see [LICENSE](LICENSE) for details.
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to modify.
-
----
-
-## 👨‍💻 Author's 
-
-**Atul Kumar Gupta**  
-Engineer | AI & Full Stack Developer  
-🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
-
-**Ankit Pawar**  
-Engineer | AI & Full Stack Developer  
-🔗 [GitHub](https://github.com/ankit8453) • [LinkedIn](https://linkedin.com/in/theatulgupta)
-
-**Gourav Chouhan**  
-Engineer | AI & Full Stack Developer  
-🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
-
-**Richa Verma**  
-Engineer | AI & Full Stack Developer  
-🔗 [GitHub](https://github.com/theatulgupta) • [LinkedIn](https://linkedin.com/in/theatulgupta)
+data/
+  raw/dental/      # Original dataset
+  processed/       # Train/val splits
+```
 
 ---
 
----
+## 🎯 Workflow
 
-dental-xray-cavity-detection/
-│
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-│
-├── config/
-│ ├── yolo_v8.yaml
-│ ├── yolo_v12.yaml
-│ └── app_config.yaml
-│
-├── data/
-│ ├── raw/
-│ ├── processed/
-│ └── annotations/
-│
-├── notebooks/
-│ ├── 01_data_exploration.ipynb
-│ ├── 02_preprocessing.ipynb
-│ ├── 03_yolov8_training.ipynb
-│ ├── 04_yolov12_training.ipynb
-│ ├── 05_inference_comparison.ipynb
-│ └── 06_metrics_visualization.ipynb
-│
-├── src/
-│ ├── data_prep/
-│ │ ├── split_dataset.py
-│ │ ├── convert_to_yolo_format.py
-│ │ └── utils.py
-│ │
-│ ├── training/
-│ │ ├── train_yolov8.py
-│ │ ├── train_yolov12.py
-│ │ └── model_utils.py
-│ │
-│ ├── evaluation/
-│ │ ├── compare_models.py
-│ │ ├── inference_benchmark.py
-│ │ └── metrics_utils.py
-│ │
-│ ├── app/
-│ │ ├── app.py
-│ │ ├── inference.py
-│ │ ├── visualize.py
-│ │ └── helpers.py
-│ │
-│ └── deployment/
-│ ├── hf_spaces_setup.md
-│ └── requirements_spaces.txt
-│
-├── models/
-│ ├── yolov8_best.pt
-│ ├── yolov12_best.pt
-│ └── model_summary.json
-│
-├── results/
-│ ├── training_logs/
-│ ├── metrics/
-│ │ ├── yolov8_results.json
-│ │ ├── yolov12_results.json
-│ └── comparison_plot.png
-│
-└── app.py
-
----
-
-## 🧩 Setup Instructions
-
-### 1️⃣ Clone the repository
+### 1. Prepare Dataset
 
 ```bash
-git clone https://github.com/<your-username>/dental-xray-cavity-detection.git
-cd dental-xray-cavity-detection
+make jupyter
+# Open 01_prepare_dataset.ipynb → Run all cells
+```
 
-2️⃣ Create and activate virtual environment
+Creates train/val split (80/20) in `data/processed/`
 
-python -m venv venv
-source venv/bin/activate     # On Windows: venv\Scripts\activate
+### 2. Train Models
 
-3️⃣ Install dependencies
+```bash
+# Open 02_train_yolov8.ipynb → Change epochs=50 → Run all cells
+# Open 03_train_yolov12.ipynb → Change epochs=50 → Run all cells
+```
 
-pip install -r requirements.txt
+Models saved to `models/yolov8_best.pt` and `models/yolov12_best.pt`
 
-4️⃣ Download dataset
+### 3. Compare Models
 
-Download from Kaggle Dental X-ray Dataset￼
-and place it inside:
+```bash
+# Open 04_compare_metrics.ipynb → Run all cells
+```
 
-data/raw/
+See performance metrics, training curves, and deployment recommendation.
 
-5️⃣ Run preprocessing
+### 4. Run Gradio App
 
-python src/data_prep/split_dataset.py
-python src/data_prep/convert_to_yolo_format.py
-
-6️⃣ Train models
-
-python src/training/train_yolov8.py
-python src/training/train_yolov12.py
-
-7️⃣ Compare performance
-
-python src/evaluation/compare_models.py
-
-8️⃣ Launch web app
-
-python app.py
-
-
-⸻
-
-🚀 Deployment (Hugging Face Spaces)
-
-Follow the instructions in:
-
-src/deployment/hf_spaces_setup.md
-
-to deploy the Gradio app to Hugging Face Spaces.
-
-⸻
-
-📊 Results
-
-Model Parameters Training Time Inference Time (avg/img) mAP
-YOLOv8 — — — —
-YOLOv12 — — — —
-
-(Results will be filled after training and evaluation.)
-
-⸻
-
-📜 License
-
-Licensed under the MIT License — see LICENSE￼ for details.
-
-⸻
-
-🤝 Contributing
-
-Pull requests are welcome!
-For major changes, please open an issue first to discuss what you’d like to modify.
-
-⸻
-
-👨‍💻 Author
-
-Atul Kumar Gupta
-Engineer | AI & Full Stack Developer
-🔗 GitHub￼ • LinkedIn￼
+```bash
+make app
+# Visit http://localhost:7860
+# Upload X-ray → See cavity detections
+```
 
 ---
+
+## 📊 Key Features
+
+- **Model Comparison:** Side-by-side YOLOv8 vs YOLOv12
+- **Bounding Boxes:** Red boxes with class labels and confidence scores
+- **Performance Metrics:** mAP, Precision, Recall, Training curves
+- **Easy Deployment:** Docker setup for team consistency
+
+---
+
+## 🛠️ Common Commands
+
+```bash
+make app          # Run Gradio app
+make jupyter      # Run Jupyter notebooks
+make train-v8     # Quick YOLOv8 training (1 epoch)
+make train-v12    # Quick YOLOv12 training (1 epoch)
+make build        # Rebuild Docker image
+make down         # Stop containers
 ```
+
+---
+
+## 🐛 Troubleshooting
+
+**PyTorch weights_only error?**  
+Already patched in all notebooks. Just run cells normally.
+
+**No models found?**  
+Train models first using notebooks 02 and 03.
+
+**Port already in use?**  
+Edit `docker-compose.yml`, change `7860:7860` to `7861:7860`
+
+**More help:** See [TEAM_SETUP.md](TEAM_SETUP.md)
+
+---
+
+## 👥 Team
+
+- ANKIT PAWAR (10, 25MCSA23)
+- ATUL KUMAR GUPTA (25MCSS06)
+- RICHA VERMA (25MCSS02)
+- GOURAV CHOUHAN (25MCSS15)
+
+---
+
+## 📄 License
+
+See [LICENSE](LICENSE) file.
+
+Dataset: <https://www.kaggle.com/datasets/killa92/dental-x-ray-images-dataset>
