@@ -1,0 +1,8 @@
+{
+  "model": "YOLOv8n",
+  "training_time": 16.669110774993896,
+  "params": 3.011628,
+  "inference_time_ms": 65.56570419779746,
+  "map50": 0.0,
+  "map50_95": 0.0
+}

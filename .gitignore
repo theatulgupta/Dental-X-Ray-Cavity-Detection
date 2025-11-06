@@ -33,7 +33,7 @@ ehthumbs.db
 
 # Project specific
 runs/                    # Training outputs (too large for git)
-yolov12/runs/           # YOLOv12 training outputs
+yolov12/                 # YOLOv12 repository (nested git repo - ignore entirely)
 *.pt                     # Model weights (use Git LFS or separate storage)
 *.pth
 *.onnx
