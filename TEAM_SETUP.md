@@ -14,7 +14,13 @@ cd Dental-X-Ray-Cavity-Detection
 conda env create -f environment.yml
 conda activate dental-xray
 
-# 4. Run
+# 4. Clone YOLOv12 (required for YOLOv12 training - not in main repo)
+git clone https://github.com/THU-MIG/yolov10.git yolov12
+cd yolov12
+pip install -e .
+cd ..
+
+# 5. Run
 python app.py              # Gradio at http://localhost:7860
 jupyter notebook           # Jupyter notebooks
 ```
@@ -42,7 +48,13 @@ source .venv/bin/activate  # Mac/Linux
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run
+# 4. Clone YOLOv12 (required for YOLOv12 training - not in main repo)
+git clone https://github.com/THU-MIG/yolov10.git yolov12
+cd yolov12
+pip install -e .
+cd ..
+
+# 5. Run
 python app.py
 jupyter notebook
 ```
@@ -134,9 +146,14 @@ data/
     val/images/, val/labels/
     test/images/, test/labels/
 
+yolov12/                      # YOLOv12 repo (clone separately - not in git)
+                              # Clone with: git clone https://github.com/THU-MIG/yolov10.git yolov12
+
 environment.yml               # Conda environment specification
 requirements.txt              # Pip requirements
 ```
+
+**Note:** The `yolov12/` directory is NOT included in the repository. You must clone it separately as shown in the setup instructions above.
 
 ---
 

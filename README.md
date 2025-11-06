@@ -22,17 +22,35 @@ make jupyter  # Notebooks → http://localhost:8888
 #### Option 1: Conda (Recommended)
 
 ```bash
+# 1. Create environment
 conda env create -f environment.yml
 conda activate dental-xray
+
+# 2. Clone YOLOv12 repository (required for YOLOv12 training)
+git clone https://github.com/THU-MIG/yolov10.git yolov12
+cd yolov12
+pip install -e .
+cd ..
+
+# 3. Run the app
 python app.py
 ```
 
 #### Option 2: Python venv
 
 ```bash
+# 1. Create environment
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+# 2. Clone YOLOv12 repository (required for YOLOv12 training)
+git clone https://github.com/THU-MIG/yolov10.git yolov12
+cd yolov12
+pip install -e .
+cd ..
+
+# 3. Run the app
 python app.py
 ```
 
