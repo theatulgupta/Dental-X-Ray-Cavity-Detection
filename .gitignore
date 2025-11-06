@@ -32,8 +32,9 @@ Thumbs.db
 ehthumbs.db
 
 # Project specific
-runs/          # Training outputs (too large for git)
-*.pt           # Model weights (use Git LFS or separate storage)
+runs/                    # Training outputs (too large for git)
+yolov12/runs/           # YOLOv12 training outputs
+*.pt                     # Model weights (use Git LFS or separate storage)
 *.pth
 *.onnx
 
@@ -41,9 +42,14 @@ runs/          # Training outputs (too large for git)
 *.log
 *.out
 
+# Test files
+test_*.py               # Test scripts
+test_*.sh               # Test shell scripts
+
 # Data (add to Git LFS if needed)
-data/raw/dental/images/*.png
-data/processed/*/images/*.png
+# data/raw/             # Now using local data - allow git tracking
+# data/processed/       # Generated from local data - allow git tracking
+notebooks/Dental-*/     # Old dataset copies
 
 # Temporary
 *.tmp
