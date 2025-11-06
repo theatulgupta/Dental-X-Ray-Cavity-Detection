@@ -1,51 +1,55 @@
 # Dental X-Ray Cavity Detection
 
-Deep learning project to detect cavities in dental X-rays using YOLOv8 and YOLOv12.
+Deep learning project comparing YOLOv8 and YOLOv12 for cavity detection using Roboflow dataset.
 
 ---
 
 ## 🚀 Quick Start
 
-### Docker (Recommended)
+### Docker
 
 ```bash
 make app      # Gradio app → http://localhost:7860
 make jupyter  # Notebooks → http://localhost:8888
 ```
 
-### Manual Setup
+### Local Setup
+
+#### Option 1: Conda (Recommended)
+
+```bash
+conda env create -f environment.yml
+conda activate dental-xray
+python app.py
+```
+
+#### Option 2: Python venv
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Mac/Linux | .venv\Scripts\activate on Windows
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
 
-📖 **Full setup guide:** [TEAM_SETUP.md](TEAM_SETUP.md)
-
 ---
 
-## 📁 Project Structure
+## 📁 Structure
 
-```
+```plaintext
 notebooks/
-  01_prepare_dataset.ipynb    # Split data into train/val
-  02_train_yolov8.ipynb        # Train YOLOv8 model
-  03_train_yolov12.ipynb       # Train YOLOv12 model
-  04_compare_metrics.ipynb     # Compare model performance
-
-src/app/
-  app.py          # Gradio web interface
-  inference.py    # Model loading & prediction
+  01_prepare_dataset.ipynb     # Download Roboflow dataset
+  02_train_yolov8.ipynb        # Train YOLOv8n
+  03_train_yolov12.ipynb       # Train YOLOv12n
+  04_compare_metrics.ipynb     # Compare models
 
 models/
-  yolov8_best.pt   # YOLOv8 trained weights
-  yolov12_best.pt  # YOLOv12 trained weights
+  yolov8_best.pt              # Trained weights
+  yolov12_best.pt
+  yolov8_metrics.json         # Performance metrics
+  yolov12_metrics.json
 
-data/
-  raw/dental/      # Original dataset
-  processed/       # Train/val splits
+app.py                        # Gradio interface
 ```
 
 ---
@@ -55,82 +59,52 @@ data/
 ### 1. Prepare Dataset
 
 ```bash
-make jupyter
-# Open 01_prepare_dataset.ipynb → Run all cells
+# Run 01_prepare_dataset.ipynb
+# Downloads from Roboflow and saves to data/processed/
 ```
-
-Creates train/val split (80/20) in `data/processed/`
 
 ### 2. Train Models
 
 ```bash
-# Open 02_train_yolov8.ipynb → Change epochs=50 → Run all cells
-# Open 03_train_yolov12.ipynb → Change epochs=50 → Run all cells
+# Run 02_train_yolov8.ipynb (YOLOv8n, 50 epochs)
+# Run 03_train_yolov12.ipynb (YOLOv12n, 50 epochs)
+# Models and metrics saved to models/
 ```
 
-Models saved to `models/yolov8_best.pt` and `models/yolov12_best.pt`
-
-### 3. Compare Models
+### 3. Compare Results
 
 ```bash
-# Open 04_compare_metrics.ipynb → Run all cells
+# Run 04_compare_metrics.ipynb
+# View comparison charts and recommendations
 ```
 
-See performance metrics, training curves, and deployment recommendation.
-
-### 4. Run Gradio App
+### 4. Deploy
 
 ```bash
-make app
-# Visit http://localhost:7860
-# Upload X-ray → See cavity detections
+make app  # or: python app.py
+# Upload X-rays at http://localhost:7860
 ```
 
 ---
 
-## 📊 Key Features
+## 📊 Features
 
-- **Model Comparison:** Side-by-side YOLOv8 vs YOLOv12
-- **Bounding Boxes:** Red boxes with class labels and confidence scores
-- **Performance Metrics:** mAP, Precision, Recall, Training curves
-- **Easy Deployment:** Docker setup for team consistency
+- **Roboflow Integration**: One-click dataset download
+- **Dual Model Comparison**: YOLOv8n vs YOLOv12n
+- **Comprehensive Metrics**: Training time, params, speed, mAP
+- **Interactive UI**: Gradio web interface
+- **Docker Ready**: Consistent deployment
 
 ---
 
-## 🛠️ Common Commands
+## 🛠️ Commands
 
 ```bash
 make app          # Run Gradio app
-make jupyter      # Run Jupyter notebooks
-make train-v8     # Quick YOLOv8 training (1 epoch)
-make train-v12    # Quick YOLOv12 training (1 epoch)
+make jupyter      # Run notebooks
 make build        # Rebuild Docker image
 make down         # Stop containers
 ```
-
----
-
-## 🐛 Troubleshooting
-
-**PyTorch weights_only error?**  
-Already patched in all notebooks. Just run cells normally.
-
-**No models found?**  
-Train models first using notebooks 02 and 03.
-
-**Port already in use?**  
-Edit `docker-compose.yml`, change `7860:7860` to `7861:7860`
-
-**More help:** See [TEAM_SETUP.md](TEAM_SETUP.md)
-
----
-
-## 👥 Team
-
-- ANKIT PAWAR (10, 25MCSA23)
-- ATUL KUMAR GUPTA (25MCSS06)
-- RICHA VERMA (25MCSS02)
-- GOURAV CHOUHAN (25MCSS15)
 
 ---
 
@@ -138,4 +112,4 @@ Edit `docker-compose.yml`, change `7860:7860` to `7861:7860`
 
 See [LICENSE](LICENSE) file.
 
-Dataset: <https://www.kaggle.com/datasets/killa92/dental-x-ray-images-dataset>
+**Dataset:** Roboflow - deep-learning-nesrt/dental-xray-cavity-8x2vh
