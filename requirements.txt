@@ -4,7 +4,8 @@ torchvision>=0.15.0
 ultralytics==8.2.0
 
 # Web UI
-gradio==5.0.0
+gradio==4.44.0
+huggingface-hub<1.0
 
 # Image processing
 opencv-python==4.10.0.84
