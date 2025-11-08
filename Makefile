@@ -1,4 +1,4 @@
-.PHONY: help build up down app jupyter train-v8 train-v12 clean
+.PHONY: help build up down app jupyter train-v12 clean
 
 help:
 	@echo "Docker Commands:"
@@ -7,7 +7,6 @@ help:
 	@echo "  make jupyter    - Run Jupyter notebooks (http://localhost:8888)"
 	@echo "  make up         - Run both app and jupyter"
 	@echo "  make down       - Stop all containers"
-	@echo "  make train-v8   - Train YOLOv8 model"
 	@echo "  make train-v12  - Train YOLOv12 model"
 	@echo "  make clean      - Remove containers and images"
 
@@ -25,9 +24,6 @@ app:
 
 jupyter:
 	docker-compose up jupyter
-
-train-v8:
-	docker-compose run dental-app python -m src.training.train_yolov8
 
 train-v12:
 	docker-compose run dental-app python -m src.training.train_yolov12

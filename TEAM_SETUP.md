@@ -30,11 +30,13 @@ jupyter notebook           # Jupyter notebooks
 ```bash
 # 1. Install Docker Desktop from https://www.docker.com/products/docker-desktop
 # 2. Clone and run
-git clone https://github.com/theatulgupta/Dental-X-Ray-Cavity-Detection.git
 cd Dental-X-Ray-Cavity-Detection
 make app        # Gradio at http://localhost:7860
 make jupyter    # Jupyter at http://localhost:8888
 ```
+
+```bash
+# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
 
 ### Option 3: Python venv (Fallback)
 
@@ -99,8 +101,8 @@ conda deactivate
 git pull
 make app          # Run Gradio app
 make jupyter      # Run Jupyter notebooks
-make train-v8     # Train YOLOv8
 make train-v12    # Train YOLOv12
+# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
 make down         # Stop containers
 make build        # Rebuild (only if requirements.txt changed)
 ```
@@ -179,7 +181,7 @@ conda activate dental-xray
 jupyter notebook  # Open 02_train_yolov8.ipynb or 03_train_yolov12.ipynb
 
 # Docker
-make train-v8
+# Open `02_train_yolov8.ipynb` inside Jupyter (use `make jupyter`) to run YOLOv8 training
 make train-v12
 ```
 
@@ -299,7 +301,18 @@ make app          # Run Gradio (http://localhost:7860)
 make jupyter      # Run Jupyter (http://localhost:8888)
 make up           # Run both app and jupyter
 make down         # Stop all containers
-make train-v8     # Train YOLOv8
+make train-v12    # Train YOLOv12
+make clean        # Remove all containers and images
+./test_docker.sh  # Test Docker setup
+```
+```bash
+# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
+# Docker commands for other tasks:
+make build        # Build Docker image
+make app          # Run Gradio (http://localhost:7860)
+make jupyter      # Run Jupyter (http://localhost:8888)
+make up           # Run both app and jupyter
+make down         # Stop all containers
 make train-v12    # Train YOLOv12
 make clean        # Remove all containers and images
 ./test_docker.sh  # Test Docker setup
@@ -317,8 +330,8 @@ python app.py                    # Gradio app
 jupyter notebook                 # Jupyter
 
 # Train
-python -m src.training.train_yolov8
 python -m src.training.train_yolov12
+# To train YOLOv8, open notebooks/02_train_yolov8.ipynb inside Jupyter
 ```
 
 ---
