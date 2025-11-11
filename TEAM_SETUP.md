@@ -1,85 +1,38 @@
 # Team Setup Guide
 
-## Quick Start (5 Minutes)
+This project uses a single Conda environment for everything (no Docker, no venv). Follow the steps below to get running fast.
 
-### Option 1: Conda (Recommended for ML Projects)
+## Quick Start (5 minutes)
 
 ```bash
-# 1. Install Miniconda/Anaconda
-# 2. Clone and setup
+# 1) Install Miniconda (https://docs.conda.io/en/latest/miniconda.html)
+
+# 2) Clone repo
 git clone https://github.com/theatulgupta/Dental-X-Ray-Cavity-Detection.git
 cd Dental-X-Ray-Cavity-Detection
 
-# 3. Create conda environment
+# 3) Create and activate environment
 conda env create -f environment.yml
 conda activate dental-xray
 
-# 4. Clone YOLOv12 (required for YOLOv12 training - not in main repo)
+# 4) (One-time) Clone YOLOv12 locally for training
+#    Note: yolov12 is not part of this repo; keep it sibling to notebooks/src
 git clone https://github.com/THU-MIG/yolov10.git yolov12
-cd yolov12
-pip install -e .
-cd ..
+cd yolov12 && pip install -e . && cd ..
 
-# 5. Run
-python app.py              # Gradio at http://localhost:7860
-jupyter notebook           # Jupyter notebooks
+# 5) Run
+python app.py            # Gradio app at http://localhost:7860
+jupyter notebook         # Open notebooks
 ```
 
-### Option 2: Docker
+## Why Conda
 
-```bash
-# 1. Install Docker Desktop from https://www.docker.com/products/docker-desktop
-# 2. Clone and run
-cd Dental-X-Ray-Cavity-Detection
-make app        # Gradio at http://localhost:7860
-make jupyter    # Jupyter at http://localhost:8888
-```
-
-```bash
-# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
-
-### Option 3: Python venv (Fallback)
-
-```bash
-# 1. Install Python 3.11+
-# 2. Setup environment
-python -m venv .venv
-source .venv/bin/activate  # Mac/Linux
-.venv\Scripts\activate     # Windows
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Clone YOLOv12 (required for YOLOv12 training - not in main repo)
-git clone https://github.com/THU-MIG/yolov10.git yolov12
-cd yolov12
-pip install -e .
-cd ..
-
-# 5. Run
-python app.py
-jupyter notebook
-```
-
----
-
-## Why Conda for ML?
-
-**Problem:** Deep learning needs PyTorch, CUDA, specific versions → conflicts everywhere
-
-**Solution:** Conda = best package manager for ML/AI projects
-
-✅ Better dependency resolution (PyTorch, CUDA, MKL)  
-✅ Handles both Python and system packages  
-✅ Cross-platform (Windows/Mac/Linux)  
-✅ Industry standard for data science  
-✅ Easy environment sharing with `environment.yml`
-
----
+- Reproducible: environment.yml pins compatible versions
+- ML-friendly: handles Python + system packages (MKL, PyTorch, etc.)
+- Cross-platform: works on macOS, Linux, Windows
+- One source of truth: no Docker or venv complexity
 
 ## Daily Workflow
-
-### With Conda (Recommended)
 
 ```bash
 git pull
@@ -88,117 +41,78 @@ conda activate dental-xray
 # Run app
 python app.py
 
-# Run notebooks
+# Work in notebooks
 jupyter notebook
 
-# Deactivate when done
+# When done
 conda deactivate
 ```
-
-### With Docker
-
-```bash
-git pull
-make app          # Run Gradio app
-make jupyter      # Run Jupyter notebooks
-make train-v12    # Train YOLOv12
-# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
-make down         # Stop containers
-make build        # Rebuild (only if requirements.txt changed)
-```
-
-### With Python venv
-
-```bash
-git pull
-source .venv/bin/activate
-pip install -r requirements.txt  # Only if changed
-python app.py
-jupyter notebook
-```
-
----
 
 ## Project Structure
 
 ```plaintext
 notebooks/
-  01_prepare_dataset.ipynb    # Process local dataset (data/raw/)
-  02_train_yolov8.ipynb        # Train YOLOv8
-  03_train_yolov12.ipynb       # Train YOLOv12
-  04_compare_metrics.ipynb     # Compare models
+   01_prepare_dataset.ipynb     # Prepare local dataset and splits
+   02_train_yolov8.ipynb        # Train YOLOv8
+   03_train_yolov12.ipynb       # Train YOLOv12 (uses local yolov12 repo)
+   04_compare_metrics.ipynb     # Compare metrics and resources
 
 src/app/
-  app.py                        # Gradio interface
-  inference.py                  # Model loading & prediction
+   app.py                       # Gradio UI
+   inference.py                 # Model loading & prediction helpers
 
 models/
-  yolov8_best.pt               # Trained YOLOv8 weights
-  yolov12_best.pt              # Trained YOLOv12 weights
-  yolov8_metrics.json          # YOLOv8 performance metrics
-  yolov12_metrics.json         # YOLOv12 performance metrics
+   yolov8_best.pt               # Best YOLOv8 weights (optional, not committed)
+   yolov12_best.pt              # Best YOLOv12 weights (optional, not committed)
+   yolov8_metrics.json          # Metrics (optional)
+   yolov12_metrics.json         # Metrics (optional)
 
 data/
-  raw/                          # Your local dataset (64 images)
-    images/                     # Original X-ray images
-    object_detection_labels/    # YOLO format labels (.txt)
-  processed/                    # Train/val/test splits (auto-generated)
-    dataset.yaml                # Dataset configuration
-    train/images/, train/labels/
-    val/images/, val/labels/
-    test/images/, test/labels/
+   raw/                         # Your local dataset
+      images/                    # Original X-ray images
+      object_detection_labels/   # YOLO format labels (.txt)
+   processed/
+      dataset.yaml               # Auto-generated
+      train/{images,labels}
+      val/{images,labels}
+      test/{images,labels}
 
-yolov12/                      # YOLOv12 repo (clone separately - not in git)
-                              # Clone with: git clone https://github.com/THU-MIG/yolov10.git yolov12
+yolov12/                       # Local clone for YOLOv12 (not part of repo)
 
-environment.yml               # Conda environment specification
-requirements.txt              # Pip requirements
+environment.yml                # Conda environment spec
+requirements.txt               # Optional pip mirror of dependencies
 ```
 
-**Note:** The `yolov12/` directory is NOT included in the repository. You must clone it separately as shown in the setup instructions above.
+Note: The `yolov12/` folder is not tracked by git. Clone it locally as shown above.
 
----
+## Train Models
 
-## Training Models
+### 1) Prepare dataset
 
-### Step 1: Prepare Dataset
+Open and run `notebooks/01_prepare_dataset.ipynb`:
 
-```bash
-# Open and run 01_prepare_dataset.ipynb
-# This will:
-# - Find all images in data/raw/images/
-# - Match with labels in data/raw/object_detection_labels/
-# - Split into train (70%), val (15%), test (15%)
-# - Copy to data/processed/ with proper YOLO structure
-# - Create dataset.yaml configuration file
-```
+- Scans `data/raw/images/` and `data/raw/object_detection_labels/`
+- Splits into train/val/test
+- Writes `data/processed/dataset.yaml`
 
-### Step 2: Quick Training (1 epoch for testing)
+### 2) Quick test training (1 epoch)
 
 ```bash
-# Conda
 conda activate dental-xray
-jupyter notebook  # Open 02_train_yolov8.ipynb or 03_train_yolov12.ipynb
-
-# Docker
-# Open `02_train_yolov8.ipynb` inside Jupyter (use `make jupyter`) to run YOLOv8 training
-make train-v12
+jupyter notebook  # open 02_train_yolov8.ipynb or 03_train_yolov12.ipynb
 ```
 
-### Step 3: Full Training (50-100 epochs for production)
+### 3) Full training (50–100 epochs)
 
-- Open `02_train_yolov8.ipynb`, change `epochs=50` (or 100), run all cells
-- Open `03_train_yolov12.ipynb`, change `epochs=50` (or 100), run all cells
-- Open `04_compare_metrics.ipynb`, run to see which model is better
+- In `02_train_yolov8.ipynb`, set `epochs=50` (or 100), run all cells
+- In `03_train_yolov12.ipynb`, set `epochs=50` (or 100), run all cells
+- In `04_compare_metrics.ipynb`, compare and pick the best model
 
-**Training Tips:**
+Tips:
 
-- 8GB RAM: Use `epochs=50`, `batch=8`
-- 24GB+ RAM: Use `epochs=100`, `batch=16` or higher
-- Mac M1/M2/M3: YOLOv8 uses MPS, YOLOv12 uses CPU
-- Training time: ~20s per epoch (YOLOv8), ~varies (YOLOv12 on CPU)
-
----
+- 8GB RAM: `epochs=50`, `batch=8`
+- 24GB+ RAM: `epochs=100`, `batch=16`+
+- macOS Apple Silicon: YOLOv8 uses MPS; YOLOv12 may use CPU
 
 ## Git Workflow
 
@@ -214,221 +128,82 @@ git push
 
 # If conflicts
 git pull --rebase
-# Fix conflicts
+# Resolve conflicts
 git add .
 git rebase --continue
 git push
 ```
 
----
-
 ## Troubleshooting
 
-### Docker Issues
-
-**Port already in use**
+### Python version
 
 ```bash
-# Edit docker-compose.yml, change:
-ports: ["7861:7860"]  # Use different port
+python --version  # Expect 3.11.x
 ```
 
-**Code changes not showing**
+If different, re-create the environment from `environment.yml`.
 
-- Files are mounted, no rebuild needed
-- Just refresh browser
+### Import errors or missing packages
 
-**Can't install new package**
+- Ensure you ran: `conda activate dental-xray`
+- If needed: `conda env update -f environment.yml --prune`
 
-```bash
-# 1. Add to requirements.txt
-# 2. Rebuild
-make build
-```
+### PyTorch weights_only error
 
-**Docker daemon not running**
+- Already patched in notebooks and `src/app/inference.py`
+- If it reappears, ensure you’re using our provided environment and latest notebooks
 
-- Start Docker Desktop app
+## What to Commit
 
-### Manual Setup Issues
+Commit:
 
-**Wrong Python version**
+- Code: `src/`, `notebooks/`
+- Config: `environment.yml`, `requirements.txt`
+- Docs: `README.md`, `TEAM_SETUP.md`
 
-```bash
-python --version  # Should be 3.13.5
-# Install correct version or use Docker
-```
+Don’t commit:
 
-**Import errors**
+- Local environments (`.venv/`, Conda env folders)
+- Large outputs (`runs/`), dataset images, or `*.pt` weights (use LFS or cloud)
 
-```bash
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-**PyTorch weights_only error**
-
-- Already patched in notebooks
-- If error persists, check notebook cell 1
-
----
-
-## What to Commit to Git
-
-✅ Commit:
-
-- Code (`src/`, `notebooks/`)
-- Config (`requirements.txt`, `Dockerfile`)
-- Docs (`README.md`)
-
-❌ Don't Commit:
-
-- `.venv/` (virtual environment)
-- `runs/` (training outputs - too large)
-- `*.pt` (model weights - use Git LFS or separate storage)
-- Dataset images (use Git LFS or cloud storage)
-
----
-
-## Complete Commands Reference
-
-### Docker Commands
-
-```bash
-make help         # Show all commands
-make build        # Build Docker image
-make app          # Run Gradio (http://localhost:7860)
-make jupyter      # Run Jupyter (http://localhost:8888)
-make up           # Run both app and jupyter
-make down         # Stop all containers
-make train-v12    # Train YOLOv12
-make clean        # Remove all containers and images
-./test_docker.sh  # Test Docker setup
-```
-```bash
-# To train YOLOv8, open Jupyter (make jupyter) and run notebooks/02_train_yolov8.ipynb
-# Docker commands for other tasks:
-make build        # Build Docker image
-make app          # Run Gradio (http://localhost:7860)
-make jupyter      # Run Jupyter (http://localhost:8888)
-make up           # Run both app and jupyter
-make down         # Stop all containers
-make train-v12    # Train YOLOv12
-make clean        # Remove all containers and images
-./test_docker.sh  # Test Docker setup
-```
-
-### Manual Commands
+## Commands Reference (Conda)
 
 ```bash
 # Activate environment
-source .venv/bin/activate        # Mac/Linux
-.venv\Scripts\activate           # Windows
+conda activate dental-xray
 
 # Run app
-python app.py                    # Gradio app
-jupyter notebook                 # Jupyter
+python app.py  # Gradio at http://localhost:7860
 
-# Train
+# Notebooks
+jupyter notebook
+
+# Optional: training via modules (if provided)
+python -m src.training.train_yolov8
 python -m src.training.train_yolov12
-# To train YOLOv8, open notebooks/02_train_yolov8.ipynb inside Jupyter
+
+# Deactivate
+conda deactivate
 ```
 
----
+## Environment details
 
-## File Structure Explained
+See `environment.yml` for exact, tested versions (Python, PyTorch, Ultralytics, Gradio, etc.).
 
-```
-Dockerfile              # Docker image definition (Python 3.13.5 + deps)
-docker-compose.yml      # Services: app + jupyter
-Makefile               # Shortcuts (make app, make jupyter)
-requirements.txt       # Python packages with versions
-.gitignore            # Don't commit large files
-test_docker.sh        # Test if Docker works
+## Next steps
 
-notebooks/            # 4 notebooks for training workflow
-src/                  # Source code
-models/               # Trained .pt files
-data/                 # Dataset
-runs/                 # Training outputs (auto-generated)
+1. Test setup
+
+```bash
+conda activate dental-xray
+python app.py
 ```
 
----
+2. Prepare dataset: run `01_prepare_dataset.ipynb`
 
-## Environment Details
+3. Train: run `02_train_yolov8.ipynb` and/or `03_train_yolov12.ipynb`
 
-**Python:** 3.11+  
-**PyTorch:** 2.0.0+ (with MPS for Mac M1/M2/M3)  
-**Ultralytics:** 8.2.0 (YOLO framework)  
-**Gradio:** 5.0.0 (web UI)  
-**Dataset:** 64 local images, 4 cavity classes (cavity_class_0 to cavity_class_3)  
-**Train/Val/Test Split:** 70% / 15% / 15% (~45/10/10 images)
+4. Compare models: run `04_compare_metrics.ipynb`
 
-**Package Manager:**
-
-- Conda (recommended): `environment.yml`
-- Pip (alternative): `requirements.txt`
-
----
-
-## Next Steps After Setup
-
-1. **Test setup**
-
-   ```bash
-   # Conda
-   conda activate dental-xray
-   python app.py  # Should open Gradio at http://localhost:7860
-
-   # Docker
-   ./test_docker.sh  # or: make app
-   ```
-
-2. **Prepare dataset**
-
-   - Open `01_prepare_dataset.ipynb`
-   - Run all cells to process local data from `data/raw/`
-   - Verify output: `data/processed/dataset.yaml` created
-
-3. **Train models**
-
-   - Open `02_train_yolov8.ipynb`, run all cells
-   - Open `03_train_yolov12.ipynb`, run all cells
-   - Models saved to `models/yolov8_best.pt` and `models/yolov12_best.pt`
-
-4. **Compare models**
-
-   - Open `04_compare_metrics.ipynb`, run all cells
-   - See which model performs better on your local dataset
-
-5. **Deploy**
-   - Best model weights are in `models/` directory
-   - Use `app.py` for Gradio interface
-   - Deploy to Hugging Face Spaces or cloud if needed
-
----
-
-## Support
-
-**Docker not working?**
-
-- Check if Docker Desktop is running
-- Run `./test_docker.sh` for diagnostics
-- Try `make down` then `make build` then `make app`
-
-**Manual setup issues?**
-
-- Verify Python 3.13.5: `python --version`
-- Activate venv: `source .venv/bin/activate`
-- Reinstall: `pip install -r requirements.txt`
-
-**Training errors?**
-
-- Check dataset exists in `data/raw/dental/`
-- Run `01_prepare_dataset.ipynb` first
-- PyTorch patch is in all training notebooks
-
-**Still stuck?**
-
-- Check README.md for more details
-- Ask team lead
+5. Deploy: use `app.py` with the best weights in `models/`

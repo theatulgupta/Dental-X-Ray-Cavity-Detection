@@ -2,20 +2,13 @@
 
 Deep learning project comparing YOLOv8 and YOLOv12 for cavity detection using local dental X-ray dataset.
 
-**Dataset:** 64 local X-ray images with YOLO format annotations  
-**Classes:** 4 cavity types (cavity_class_0 to cavity_class_3)  
+**Dataset:** 64 local X-ray images with YOLO format annotations
+**Classes:** 4 cavity types (cavity_class_0 to cavity_class_3)
 **Models:** YOLOv8n vs YOLOv12n
 
 ---
 
 ## 🚀 Quick Start
-
-### Docker
-
-```bash
-make app      # Gradio app → http://localhost:7860
-make jupyter  # Notebooks → http://localhost:8888
-```
 
 ### Local Setup
 
@@ -144,20 +137,10 @@ python app.py
 - **Comprehensive Metrics**: Training time, params, speed, mAP50, mAP50-95
 - **Interactive UI**: Gradio web interface for real-time detection
 - **Conda Support**: Easy environment setup with `environment.yml`
-- **Docker Ready**: Consistent deployment across platforms
 - **Automated Splitting**: 70/15/15 train/val/test split
 - **MPS Acceleration**: Mac M1/M2/M3 GPU support (YOLOv8)
 
 ---
-
-## 🛠️ Commands
-
-```bash
-make app          # Run Gradio app
-make jupyter      # Run notebooks
-make build        # Rebuild Docker image
-make down         # Stop containers
-```
 
 ---
 
