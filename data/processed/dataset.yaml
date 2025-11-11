@@ -1,4 +1,4 @@
-path: /Users/richa/Documents/Deep Learning Project/Dental-X-Ray-Cavity-Detection/data/processed
+path: /Users/theatulgupta/Desktop/Deep Learning Project/dental-xray-cavity-detection/data/processed
 train: train/images
 val: val/images
 test: test/images

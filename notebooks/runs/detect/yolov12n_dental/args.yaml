@@ -13,7 +13,7 @@ cache: false
 device: cpu
 workers: 8
 project: null
-name: yolov12n_dental
+name: yolov12n_dental3
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -103,4 +103,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: /Users/richa/Documents/Deep Learning Project/Dental-X-Ray-Cavity-Detection/notebooks/runs/detect/yolov12n_dental
+save_dir: /Users/richa/Documents/Deep Learning Project/Dental-X-Ray-Cavity-Detection/notebooks/runs/detect/yolov12n_dental3

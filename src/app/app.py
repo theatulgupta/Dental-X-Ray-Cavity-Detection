@@ -70,8 +70,8 @@ def compare_models(image):
     return img1, img2, summary
 
 # Create interface with tabs
-with gr.Blocks(title="🦷 Dental Cavity Detection") as iface:
-    gr.Markdown("# 🦷 Dental X-ray Cavity Detection")
+with gr.Blocks(title="Dental Cavity Detection") as iface:
+    gr.Markdown("#Dental X-ray Cavity Detection")
     gr.Markdown("Upload a dental X-ray to detect cavities using YOLO models")
     
     with gr.Tab("Single Model"):
